@@ -1,0 +1,39 @@
+﻿@page "/todolist"
+
+<h3>TodoList</h3>
+<p>Add todo items:</p>
+
+<div>
+    <form>
+        <input placeholder="Something todo" type="text" @bind="newTodoItem" />
+        <input type="button" value="Add" @onclick="AddItem" />
+    </form>
+</div>
+<hr />
+@foreach (var todoItem in todos)
+{
+    <div>
+        <input type="checkbox" @bind="@todoItem.IsDone" />
+        <input @bind="@todoItem.Title" />
+    </div>
+        
+}
+
+@code {
+    public class TodoItem
+    {
+        public string Title { get; set; }
+        public bool IsDone { get; set; }
+    }
+
+    private IList<TodoItem> todos = new List<TodoItem>();
+    private string newTodoItem;
+
+    protected void AddItem()
+    {
+        todos.Add(new TodoItem
+        {
+            Title = newTodoItem
+        });
+    }
+}
